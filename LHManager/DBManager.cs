@@ -7,7 +7,7 @@ using System.Data.OleDb;
 
 namespace LHManager
 {
-    class DBManager
+    public class DBManager
     {
         public static void Initial(OleDbConnection db, LHUnit[] unit)
         {
@@ -159,7 +159,7 @@ namespace LHManager
 
         public static void UpdateStatus(OleDbConnection db, byte unitNo, byte status)
         {
-            if (status == 0 | status == 3 | status == 0xC | status == 0x30)
+            if (status == 0x00 | status == 0x03 | status == 0x0C | status == 0x30)
             {
                 OleDbCommand dbCmd = new OleDbCommand();
                 dbCmd.Connection = db;

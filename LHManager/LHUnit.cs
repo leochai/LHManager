@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LHManager
 {
-    class LHUnit
+    public class LHUnit
     {
         public string productType;
         public string qualityLevel;

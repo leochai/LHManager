@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LHManager
 {
-    class GlobalElement
+    public class GlobalElement
     {
         public static DateTime lastRecallTime;
     }
