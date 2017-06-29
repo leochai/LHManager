@@ -192,7 +192,7 @@ namespace LHManager
                         voltage = (data[j + 1] * 925 + 291200) / 25600.0;
                         power = 100 * voltage / 16;
                         current = (data[j + 2] * 125 + 48000) / 25600.0 * 1000 / 100;
-                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[1].seatChart[j + dataPart * 24],
+                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[i].seatChart[j + dataPart * 24],
                                         Convert.ToByte(1), time, voltage, power, current);
                     }
                 }
@@ -209,7 +209,7 @@ namespace LHManager
                         voltage = (data[j + 1] * 1525 + 521600) / 25600.0;
                         power = 75 * voltage / 28;
                         current = (data[j + 2] * 125 + 48000) / 25600.0 * 1000 / 62.5;
-                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[1].seatChart[j + dataPart * 24],
+                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[i].seatChart[j + dataPart * 24],
                                         Convert.ToByte(1), time, voltage, power, current);
                     }
                 }
@@ -226,7 +226,7 @@ namespace LHManager
                         voltage = (data[j + 1] * 275 + 105600) / 25600.0;
                         power = 75 * voltage / 5.5;
                         current = (data[j + 2] * 125 + 48000) / 25600.0 * 1000 / 250 * 3;
-                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[1].seatChart[j + dataPart * 24],
+                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[i].seatChart[j + dataPart * 24],
                                         Convert.ToByte(1), time, voltage, power, current);
                     }
                 }
@@ -235,7 +235,25 @@ namespace LHManager
 
             if (_unit[i].productBits == 0)  //一位通用
             {
-
+                for (int j=0;j<24;j+=2){
+                    if(_unit[i].seatChart[j+dataPart*24]){
+                        double voltage, power;
+                        if(_unit[i].voltageLevel == 0){     //21V
+                            voltage = (data[j+1]* 1175 +  387200)/25600.0  ;
+                            power = 75*voltage/21;
+                        }
+                        if(_unit[i].voltageLevel == 1){     //25V
+                            voltage = (data[j+1]* 1375 +  464000)/25600.0  ;
+                            power = 75*voltage/25;
+                        }
+                        if(_unit[i].voltageLevel == 2){     //28V
+                            voltage = (data[j+1]* 1525 +  521600)/25600.0  ;
+                            power = 75*voltage/28;
+                        }
+                        DBWriteResult(_DBconn, _unit[i].testingNum, _unit[i].seatChart[j + dataPart * 24],
+                                        Convert.ToByte(1), time, voltage, power, 0);
+                    }
+                }
             }
         }
     }
