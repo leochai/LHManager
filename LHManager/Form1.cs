@@ -15,12 +15,6 @@ namespace LHManager
 {
     public partial class Form1 : Form
     {
-        public LHSerialPort RS485 = new LHSerialPort("COM3", 1200, Parity.Even, 8, StopBits.One);
-        public LHUnit[] _unit = new LHUnit[24];
-        public DateTime _lastRecallTime = new DateTime();
-        public OleDbConnection _DBconn = new OleDbConnection("Provider=Microsoft.Ace.OleDb.12.0;Data Source=" + Application.StartupPath + "/db/老化台.accdb");
-        public byte[] _readBuffer = new byte[32];
-
         public Form1()
         {
             InitializeComponent();
@@ -48,7 +42,7 @@ namespace LHManager
             {
                 _unit[i] = new LHUnit();
             }
-            DBManager.Initial(_DBconn, _unit);
+            DBInitial(_DBconn, _unit);
         }
         private void Form1_FormClosed(object sender, EventArgs e)
         {
@@ -83,7 +77,7 @@ namespace LHManager
                     if(address == _unit[i].address)
                     {
                         _unit[i].testingStatus = 0x0C;
-                        DBManager.UpdateStatus(_DBconn, i, _unit[i].testingStatus);
+                        DBUpdateStatus(_DBconn, i, _unit[i].testingStatus);
                         break;
                     }
                 }

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OleDb;
 
 namespace LHManager
 {
-    public class DBManager
+    public partial class Form1
     {
-        public static void Initial(OleDbConnection db, LHUnit[] unit)
+        public void DBInitial(OleDbConnection db, LHUnit[] unit)
         {
             OleDbCommand dbCmd = new OleDbCommand();
             dbCmd.Connection = db;
@@ -91,7 +87,7 @@ namespace LHManager
 
         }
 
-        public static void WriteResult(OleDbConnection db, string testNum, byte chipNum, byte num,
+        public void DBWriteResult(OleDbConnection db, string testNum, byte chipNum, byte num,
             DateTime time, double voltage, double power, double current)
         {
             OleDbCommand dbCmd = new OleDbCommand();
@@ -111,7 +107,7 @@ namespace LHManager
             dbCmd.ExecuteNonQuery();
         }
 
-        public static void UpdateLastHour(OleDbConnection db, byte unitNo, DateTime time)
+        public void DBUpdateLastHour(OleDbConnection db, byte unitNo, DateTime time)
         {
             OleDbCommand dbCmd = new OleDbCommand();
             dbCmd.Connection = db;
@@ -119,7 +115,7 @@ namespace LHManager
             dbCmd.ExecuteNonQuery();
         }
 
-        public static void UpdateStartTestingStatus(OleDbConnection db, LHUnit unit, byte unitNo)
+        public void DBUpdateStartTestingStatus(OleDbConnection db, LHUnit unit, byte unitNo)
         {
             OleDbCommand dbCmd = new OleDbCommand();
             dbCmd.Connection = db;
@@ -148,18 +144,18 @@ namespace LHManager
             }
         }
 
-        public static void UpdateRecallTime(OleDbConnection db)
+        public void DBUpdateRecallTime(OleDbConnection db)
         {
             OleDbCommand dbCmd = new OleDbCommand();
             dbCmd.Connection = db;
-            GlobalElement.lastRecallTime = System.DateTime.Now;
-            dbCmd.CommandText = "update 最近召回时间 set 时间 = #" + GlobalElement.lastRecallTime + "# where id = 1";
+            _lastRecallTime = System.DateTime.Now;
+            dbCmd.CommandText = "update 最近召回时间 set 时间 = #" + _lastRecallTime + "# where id = 1";
             dbCmd.ExecuteNonQuery();
         }
 
-        public static void UpdateStatus(OleDbConnection db, byte unitNo, byte status)
+        public void DBUpdateStatus(OleDbConnection db, byte unitNo, byte status)
         {
-            if (status == 0x00 | status == 0x03 | status == 0x0C | status == 0x30)
+            if (status == 0x00 || status == 0x03 || status == 0x0C || status == 0x30)
             {
                 OleDbCommand dbCmd = new OleDbCommand();
                 dbCmd.Connection = db;
@@ -168,7 +164,7 @@ namespace LHManager
             }
         }
 
-        public static void UpdateReboot340Status(OleDbConnection db, LHUnit unit, byte unitNo)
+        public void DBUpdateReboot340Status(OleDbConnection db, LHUnit unit, byte unitNo)
         {
             OleDbCommand dbCmd = new OleDbCommand();
             dbCmd.Connection = db;
