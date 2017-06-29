@@ -26,15 +26,15 @@ namespace LHManager
             RS485.ReadTimeout = 200;
             RS485.ReceivedBytesThreshold = 3;
             RS485.RtsEnable = true;
-            try
-            {
-                RS485.Open();
-            }
-            catch 
-            {
-                MessageBox.Show("请检查串口连接后再尝试打开程序！");
-                this.Close();
-            }
+            //try
+            //{
+            //    RS485.Open();
+            //}
+            //catch 
+            //{
+            //    MessageBox.Show("请检查串口连接后再尝试打开程序！");
+            //    this.Close();
+            //}
 
 
             _DBconn.Open();
@@ -43,45 +43,14 @@ namespace LHManager
                 _unit[i] = new LHUnit();
             }
             DBInitial(_DBconn, _unit);
+            byte[] show = new byte[5] { 0x13, 0xA3, 0x2F, 0xB5, 0xCC };
+            
         }
         private void Form1_FormClosed(object sender, EventArgs e)
         {
 
         }
 
-        private void ReplyPolling()
-        {
-            byte dataLength = _readBuffer[1];
-            byte address = _readBuffer[3];
-            byte[] data = new byte[dataLength - 2];
-            for(int i=0; i<dataLength-2; i++)
-            {
-                data[i] = _readBuffer[i + 5];
-            }
-
-            byte status = data[0];
-            if(status == 0x00)
-            {
-
-            }
-
-            if(status == 0x03)
-            {
-
-            }
-
-            if (status == 0x0C)
-            {
-                for(byte i = 0; i < 24; i++)
-                {
-                    if(address == _unit[i].address)
-                    {
-                        _unit[i].testingStatus = 0x0C;
-                        DBUpdateStatus(_DBconn, i, _unit[i].testingStatus);
-                        break;
-                    }
-                }
-            }
-        }
+        
     }
 }

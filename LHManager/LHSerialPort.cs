@@ -231,9 +231,11 @@ namespace LHManager
             wbuffer[2] = beginning;
             wbuffer[3] = address;
             wbuffer[4] = cmdTimeModify;
-            wbuffer[5] = 
-            wbuffer[5] = CS(wbuffer, wbuffer.Length - 2);
-            wbuffer[6] = terminal;
+            wbuffer[5] = Convert.ToByte(now.Second);
+            wbuffer[6] = Convert.ToByte(now.Minute);
+            wbuffer[7] = Convert.ToByte(now.Hour);
+            wbuffer[8] = CS(wbuffer, wbuffer.Length - 2);
+            wbuffer[9] = terminal;
 
             base.Write(wbuffer, 0, wbuffer.Length);
 
