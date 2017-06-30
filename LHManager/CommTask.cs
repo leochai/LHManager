@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Collections;
 using System.Windows.Forms;
 
@@ -376,7 +372,7 @@ namespace LHManager
 
         private void StartupTask(byte unitNo)
         {
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (!DistributeTask(unitNo))
                 {
@@ -387,10 +383,10 @@ namespace LHManager
                 Thread.Sleep(300 + 120);
                 if (RS485.Readup(_readBuffer) == LHSerialPort.cmdStartup)
                 {
-                    if(_unit[unitNo].testingStatus == 0x0C)  //340继续
+                    if (_unit[unitNo].testingStatus == 0x0C)  //340继续
                     {
                         _unit[unitNo].testingStatus = 0x00;
-                        DBUpdateResume340Status(_DBconn, _unit[unitNo],unitNo);
+                        DBUpdateResume340Status(_DBconn, _unit[unitNo], unitNo);
                     }
                     else
                     {
@@ -422,9 +418,48 @@ namespace LHManager
             LHUnit.TimeModify(RS485);
         }
 
-        private void Reboot340Task(byte unitNo) { }
-        private void RebootHardTask(byte unitNo) { }
+        private void Reboot340Task(byte unitNo)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (!DistributeTask(unitNo))
+                {
+                    MessageBox.Show("参数下发有误，请检查！");
+                    return;
+                }
+                _unit[unitNo].Reboot340(RS485);
+                Thread.Sleep(300 + 120);
+                if (RS485.Readup(_readBuffer) == LHSerialPort.cmdReboot340)
+                {
+                    _unit[unitNo].testingStatus = 0x00;
+                    _unit[unitNo].lastHour = DateTime.Now.AddHours(-1);
+                    MessageBox.Show("放弃340小时后试验，并重启新试验，成功！");
+                    DBUpdateStartTestingStatus(_DBconn, _unit[unitNo], unitNo);
+                    break;
+                }
+            }
+        }
 
-        
+        private void RebootHardTask(byte unitNo)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (!DistributeTask(unitNo))
+                {
+                    MessageBox.Show("参数下发有误，请检查！");
+                    return;
+                }
+                _unit[unitNo].RebootHard(RS485);
+                Thread.Sleep(300 + 120);
+                if (RS485.Readup(_readBuffer) == LHSerialPort.cmdRebootHard)
+                {
+                    _unit[unitNo].testingStatus = 0x00;
+                    _unit[unitNo].lastHour = DateTime.Now.AddHours(-1);
+                    MessageBox.Show("强制终止试验，并重启新试验，成功！");
+                    DBUpdateStartTestingStatus(_DBconn, _unit[unitNo], unitNo);
+                    break;
+                }
+            }
+        }
     }
 }

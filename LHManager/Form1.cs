@@ -17,6 +17,9 @@ namespace LHManager
 {
     public partial class Form1 : Form
     {
+
+       
+
         public Form1()
         {
             InitializeComponent();
@@ -46,25 +49,29 @@ namespace LHManager
             }
             DBInitial(_DBconn, _unit);
             byte[] show = new byte[5] { 0x13, 0xA3, 0x2F, 0xB5, 0xCC };
+
+
             
+            for(int i = 0; i < 5; i++)
+            {
+                Label label = new Label();
+                label.Left = 10;
+                label.Top = i * 50 + 50;
+                label.Text = "label-" + i;
+                label.Parent = this;
+                labelArrayList.Add(label);
+            }
         }
         private void Form1_FormClosed(object sender, EventArgs e)
         {
-
+            _DBconn.Close();
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-            //int a = 0;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < labelArrayList.Count; i++)
             {
-                for(int j = 3; j < 7; j++)
-                {
-                    Debug.WriteLine(i);
-                    Debug.WriteLine(j);
-                    Debug.WriteLine("");
-                    break;
-                }
+                ((Label)labelArrayList[i]).Text += "--1";
             }
         }
     }
