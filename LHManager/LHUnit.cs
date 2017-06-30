@@ -31,9 +31,9 @@ namespace LHManager
             com.WritePolling(address);
         }
 
-        public void Integral(LHSerialPort com,byte part,byte time)
+        public void Integral(LHSerialPort com,byte part)
         {
-            com.WriteIntegral(address, part, time);
+            com.WriteIntegral(address, part, Convert.ToByte(this.lastHour.Hour));
         }
 
         public void Distribute(LHSerialPort com)

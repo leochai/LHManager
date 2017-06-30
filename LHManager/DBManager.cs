@@ -164,7 +164,7 @@ namespace LHManager
             }
         }
 
-        public void DBUpdateReboot340Status(OleDbConnection db, LHUnit unit, byte unitNo)
+        public void DBUpdateResume340Status(OleDbConnection db, LHUnit unit, byte unitNo)
         {
             OleDbCommand dbCmd = new OleDbCommand();
             dbCmd.Connection = db;

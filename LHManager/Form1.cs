@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.IO.Ports;
 using System.Threading;
+using System.Collections;
+using System.Diagnostics;
 
 namespace LHManager
 {
@@ -51,6 +53,19 @@ namespace LHManager
 
         }
 
-        
+        private void label1_Click(object sender, EventArgs e)
+        {
+            //int a = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for(int j = 3; j < 7; j++)
+                {
+                    Debug.WriteLine(i);
+                    Debug.WriteLine(j);
+                    Debug.WriteLine("");
+                    break;
+                }
+            }
+        }
     }
 }
