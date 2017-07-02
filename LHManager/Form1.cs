@@ -48,19 +48,9 @@ namespace LHManager
                 _unit[i] = new LHUnit();
             }
             DBInitial(_DBconn, _unit);
-            byte[] show = new byte[5] { 0x13, 0xA3, 0x2F, 0xB5, 0xCC };
 
-
+            ViewInitiate();
             
-            for(int i = 0; i < 5; i++)
-            {
-                Label label = new Label();
-                label.Left = 10;
-                label.Top = i * 50 + 50;
-                label.Text = "label-" + i;
-                label.Parent = this;
-                labelArrayList.Add(label);
-            }
         }
         private void Form1_FormClosed(object sender, EventArgs e)
         {
@@ -69,10 +59,7 @@ namespace LHManager
 
         private void label1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < labelArrayList.Count; i++)
-            {
-                ((Label)labelArrayList[i]).Text += "--1";
-            }
+            
         }
     }
 }
