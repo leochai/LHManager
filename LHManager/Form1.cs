@@ -17,8 +17,7 @@ namespace LHManager
 {
     public partial class Form1 : Form
     {
-
-       
+              
 
         public Form1()
         {
@@ -57,9 +56,10 @@ namespace LHManager
             _DBconn.Close();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void btnStartup_Click(object sender, EventArgs e)
         {
-            
+            frmStartup myfrmStartup = new frmStartup();
+            myfrmStartup.Show();
         }
     }
 }

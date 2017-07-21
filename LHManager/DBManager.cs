@@ -39,7 +39,7 @@ namespace LHManager
                     }
                     if (!(reader["单元地址"].Equals(DBNull.Value)))
                     {
-                        unit[i].testingStatus = Convert.ToByte(reader["单元地址"]);
+                        unit[i].address = Convert.ToByte(reader["单元地址"]);
                     }
                     if (!(reader["电压规格"].Equals(DBNull.Value)))
                     {
